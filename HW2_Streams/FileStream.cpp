@@ -1,7 +1,7 @@
 #include "FileStream.hpp"
 
 CS422::FileStream::FileStream(std::string path, std::ios_base::openmode mode){
-	_buf.open(path.c_str, mode | std::ios_base::binary);
+	_buf.open(path.c_str(), mode | std::ios_base::binary);
 	_mode = mode | std::ios_base::binary;
 }
 
@@ -21,16 +21,16 @@ bool CS422::FileStream::CanWrite(){
 	return _mode & std::ios_base::out;
 }
 
-void CS422::FileStream::Flush(){
-	return; // it writes already, a stream is a pipe not a pit
+i64 CS422::FileStream::GetLength(){
+	std::streampos current = _buf.cur;
+	std::streampos beg, end;
+	beg = _buf.seekg(std::ios::beg).tellg();
+	end = _buf.seekg(std::ios::end).tellg();
+	_buf.seekg(0, current);
+	return end - beg;
 }
 
-i64 CS422::FileStream::GetLength() const{
-
-	return -1;
-}
-
-i64 CS422::FileStream::GetPosition() const{
+i64 CS422::FileStream::GetPosition(){
 	return _buf.tellg();
 }
 

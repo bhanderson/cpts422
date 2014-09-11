@@ -11,7 +11,7 @@ namespace CS422
 	{
 	public:
 		FileStream(std::string path, std::ios::openmode mode);
-		virtual ~FileStream() { }
+		virtual ~FileStream();
 
 		// Returns a boolean indicating whether or not this stream can be read from.
 		virtual bool CanRead() = 0;
@@ -29,16 +29,16 @@ namespace CS422
 		// If the stream buffers content before writing it to the final output 
 		// destination then calling this method forces any pending data to be fully 
 		// written.
-		virtual void Flush() { }
+		virtual void Flush(){ }
 
 		// Returns a 64-bit signed integer indicating the total size of the stream,
 		// in bytes. Any negative values returned indicate an error.
-		virtual i64 GetLength() const = 0;
+		virtual i64 GetLength();
 
 		// Returns the current stream position. All valid positions within a stream are 
 		// non-negative numbers. A negative return value from this function indicates 
 		// an error and that the stream is in an invalid state.
-		virtual i64 GetPosition() const = 0;
+		virtual i64 GetPosition();
 
 		// Attempts to read "byteCount" bytes from the stream starting at the current position.
 		// Returns the number of bytes successfully read on success. After a successful read 
