@@ -22,12 +22,10 @@ bool CS422::FileStream::CanWrite(){
 }
 
 i64 CS422::FileStream::GetLength(){
-	std::streampos current = _buf.cur;
-	std::streampos beg, end;
-	beg = _buf.seekg(std::ios::beg).tellg();
-	end = _buf.seekg(std::ios::end).tellg();
+	std::streampos current = _buf.tellg();
+	int length = _buf.seekg(0, _buf.end).tellg();
 	_buf.seekg(current);
-	return end - beg;
+	return length;
 }
 
 i64 CS422::FileStream::GetPosition(){
@@ -35,19 +33,25 @@ i64 CS422::FileStream::GetPosition(){
 }
 
 int CS422::FileStream::Read(void *buf, int byteCount){
-	_buf.read((char *) buf, byteCount);
-	if (_buf.eof()) // reached the end return 0
-		return 0;
-	return std::strlen((char*) buf);
+	int length = _buf.read((char *) buf, byteCount).gcount();
+	_buf.clear();
+	return length;
 }
 
 i64 CS422::FileStream::SetPosition(i64 position){
+	if (!CanSeek())
+		return -1;
+	if (GetLength() < position)
+		return GetPosition();
 	_buf.seekg(position);
-	return _buf.tellg();
+	return GetPosition();
 }
 
 int CS422::FileStream::Write(const void* buf, int byteCount){
-	std::streampos current = _buf.tellg();
-	_buf.write((char *)buf, byteCount);
-	return _buf.tellg() - current;
+	if (CanWrite()) {
+		std::streampos current = GetPosition();
+		_buf.write((const char *)buf, byteCount);
+		return _buf.tellg() - current;
+	}
+	return 0;
 }
