@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "Stream.hpp"
+#include "FileStream.hpp"
 
 using namespace CS422;
 

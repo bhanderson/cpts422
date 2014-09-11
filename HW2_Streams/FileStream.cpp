@@ -1,7 +1,8 @@
 #include "FileStream.hpp"
 
-CS422::FileStream::FileStream(std::string path, std::ios_base::openmode mode)
-	: _buf(path, mode){
+CS422::FileStream::FileStream(std::string path, std::ios_base::openmode mode){
+	_buf.open(path.c_str, mode | std::ios_base::binary);
+	_mode = mode | std::ios_base::binary;
 }
 
 CS422::FileStream::~FileStream(){
@@ -9,31 +10,34 @@ CS422::FileStream::~FileStream(){
 }
 
 bool CS422::FileStream::CanRead(){
-	return _readable;
+	return _mode & std::ios_base::in;
 }
 
 bool CS422::FileStream::CanSeek(){
-	return _seekable;
+	return true;
 }
 
 bool CS422::FileStream::CanWrite(){
-	return _writable;
+	return _mode & std::ios_base::out;
 }
 
 void CS422::FileStream::Flush(){
-	return;
+	return; // it writes already, a stream is a pipe not a pit
 }
 
-i64 CS422::FileStream::GetLength(){
-	return _buf.end - _buf.beg;
+i64 CS422::FileStream::GetLength() const{
+
+	return -1;
 }
 
-i64 CS422::FileStream::GetPosition(){
+i64 CS422::FileStream::GetPosition() const{
 	return _buf.tellg();
 }
 
 int CS422::FileStream::Read(void *buf, int byteCount){
 	_buf.read((char *) buf, byteCount);
+	if (_buf.eof()) // reached the end return 0
+		return 0;
 	return std::strlen((char*) buf);
 }
 
