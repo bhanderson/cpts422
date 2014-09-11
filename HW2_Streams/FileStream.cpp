@@ -1,8 +1,8 @@
 #include "FileStream.hpp"
 
-CS422::FileStream::FileStream(std::string path, std::ios_base::openmode mode){
-	_buf.open(path.c_str(), mode | std::ios_base::binary);
-	_mode = mode | std::ios_base::binary;
+CS422::FileStream::FileStream(std::string path, std::ios::openmode mode){
+	_buf.open(path.c_str(), mode | std::ios::binary);
+	_mode = mode | std::ios::binary;
 }
 
 CS422::FileStream::~FileStream(){
@@ -10,7 +10,7 @@ CS422::FileStream::~FileStream(){
 }
 
 bool CS422::FileStream::CanRead(){
-	return _mode & std::ios_base::in;
+	return _mode & std::ios::in;
 }
 
 bool CS422::FileStream::CanSeek(){
@@ -18,7 +18,7 @@ bool CS422::FileStream::CanSeek(){
 }
 
 bool CS422::FileStream::CanWrite(){
-	return _mode & std::ios_base::out;
+	return _mode && std::ios::out;
 }
 
 i64 CS422::FileStream::GetLength(){
@@ -26,7 +26,7 @@ i64 CS422::FileStream::GetLength(){
 	std::streampos beg, end;
 	beg = _buf.seekg(std::ios::beg).tellg();
 	end = _buf.seekg(std::ios::end).tellg();
-	_buf.seekg(0, current);
+	_buf.seekg(current);
 	return end - beg;
 }
 
@@ -47,7 +47,7 @@ i64 CS422::FileStream::SetPosition(i64 position){
 }
 
 int CS422::FileStream::Write(const void* buf, int byteCount){
-	int current = _buf.tellg();
+	std::streampos current = _buf.tellg();
 	_buf.write((char *)buf, byteCount);
-	return (int)_buf.tellg() - current;
+	return _buf.tellg() - current;
 }

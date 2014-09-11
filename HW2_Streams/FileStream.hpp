@@ -7,38 +7,38 @@
 
 namespace CS422
 {
-	class FileStream : Stream
+	class FileStream : public Stream
 	{
 	public:
 		FileStream(std::string path, std::ios::openmode mode);
-		virtual ~FileStream();
+		~FileStream();
 
 		// Returns a boolean indicating whether or not this stream can be read from.
-		virtual bool CanRead() = 0;
+		bool CanRead();
 
 		// Returns a boolean indicating whether or not seeking is allowed with this 
 		// stream. If this returns true then both the GetPosition and SetPosition 
 		// functions will be available for getting and setting the position within 
 		// the stream. If it returns false then neither of those functions should be 
 		// used.
-		virtual bool CanSeek() = 0;
+		bool CanSeek();
 
 		// Returns a boolean indicating whether or not this stream can be written to.
-		virtual bool CanWrite() = 0;
+		bool CanWrite();
 
 		// If the stream buffers content before writing it to the final output 
 		// destination then calling this method forces any pending data to be fully 
 		// written.
-		virtual void Flush(){ }
+		void Flush() { }
 
 		// Returns a 64-bit signed integer indicating the total size of the stream,
 		// in bytes. Any negative values returned indicate an error.
-		virtual i64 GetLength();
+		i64 GetLength();
 
 		// Returns the current stream position. All valid positions within a stream are 
 		// non-negative numbers. A negative return value from this function indicates 
 		// an error and that the stream is in an invalid state.
-		virtual i64 GetPosition();
+		i64 GetPosition();
 
 		// Attempts to read "byteCount" bytes from the stream starting at the current position.
 		// Returns the number of bytes successfully read on success. After a successful read 
@@ -50,7 +50,7 @@ namespace CS422
 		//
 		// Returns a negative value if an error occurs. The negative-valued error codes will be 
 		// specific to the stream type.
-		virtual int Read(void* buf, int byteCount) = 0;
+		int Read(void* buf, int byteCount);
 
 		// Sets the position of the stream. If the requested stream position is invalid, then 
 		// no changes will be made to the stream and the current position will be returned. 
@@ -60,12 +60,12 @@ namespace CS422
 		// If CanSeek() returns false for this stream, implying that the stream doesn't 
 		// support seeking, then this method does not alter the state of the stream and 
 		// returns -1.
-		virtual i64 SetPosition(i64 position) = 0;
+		i64 SetPosition(i64 position);
 
 		// Attempts to write "ByteCount" bytes to the stream starting at the current position.
 		// Returns the number of bytes successfully written.
 		// Advances the position of the stream by the number of bytes written.
-		virtual int Write(const void* buf, int byteCount) = 0;
+		int Write(const void* buf, int byteCount);
 	private:
 		std::fstream _buf;
 		std::ios_base::openmode _mode;
