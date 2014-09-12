@@ -28,12 +28,12 @@ public:
 
 	// Returns a 64-bit signed integer indicating the total size of the stream,
 	// in bytes. Any negative values returned indicate an error.
-	i64 GetLength() const;
+	i64 GetLength();
 
 	// Returns the current stream position. All valid positions within a stream are 
 	// non-negative numbers. A negative return value from this function indicates 
 	// an error and that the stream is in an invalid state.
-	i64 GetPosition() const;
+	i64 GetPosition();
 
 	// Attempts to read "byteCount" bytes from the stream starting at the current position.
 	// Returns the number of bytes successfully read on success. After a successful read 

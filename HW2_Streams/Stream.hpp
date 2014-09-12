@@ -43,12 +43,12 @@ namespace CS422
 
 		// Returns a 64-bit signed integer indicating the total size of the stream,
 		// in bytes. Any negative values returned indicate an error.
-		virtual i64 GetLength() const = 0;
+		virtual i64 GetLength() = 0;
 	
 		// Returns the current stream position. All valid positions within a stream are 
 		// non-negative numbers. A negative return value from this function indicates 
 		// an error and that the stream is in an invalid state.
-		virtual i64 GetPosition() const = 0;
+		virtual i64 GetPosition() = 0;
 
 		// Attempts to read "byteCount" bytes from the stream starting at the current position.
 		// Returns the number of bytes successfully read on success. After a successful read 

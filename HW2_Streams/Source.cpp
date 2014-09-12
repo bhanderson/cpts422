@@ -139,6 +139,7 @@ int main(int argc, const char* argv[])
 	// each type of stream that you implemented).
 	// Write Stream unit testing functions and kick off the tests from here in main.
 	IndexedNumberStream fuckIt(10);
+	FileStream yolo("C:\\%username%\test.txt", ios::out | ios::in);
 	Stream* Hate = &fuckIt;
 	unsigned char temp[128];
 	char resultValues[] = "BB";
@@ -151,9 +152,6 @@ int main(int argc, const char* argv[])
 	cout << RandomRead(Hate, tests, 2, 0) << endl;
 	cout << AllAtOnceWrite(Hate, data, 256) << endl;
 	//cout << FixedSizeWrite(Hate, testValues, writevalues);
-
-
-
 	return 0;
 }
 
