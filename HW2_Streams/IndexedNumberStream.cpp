@@ -18,13 +18,17 @@ bool IndexedNumberStream::CanSeek()
 	return true;
 }
 
+void Flush(){
 
-i64 IndexedNumberStream::GetLength() const
+}
+
+
+i64 IndexedNumberStream::GetLength()
 {
 	return _size;
 }
 
-i64 IndexedNumberStream::GetPosition() const
+i64 IndexedNumberStream::GetPosition()
 {
 	return _position;
 }
