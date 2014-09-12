@@ -21,6 +21,10 @@ bool CS422::FileStream::CanWrite(){
 	return _mode && std::ios::out;
 }
 
+void CS422::FileStream::Flush(){
+	_buf.flush();
+}
+
 i64 CS422::FileStream::GetLength(){
 	std::streampos current = _buf.tellg();
 	int length = _buf.seekg(0, _buf.end).tellg();

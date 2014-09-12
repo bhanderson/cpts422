@@ -29,7 +29,7 @@ namespace CS422
 		// If the stream buffers content before writing it to the final output 
 		// destination then calling this method forces any pending data to be fully 
 		// written.
-		void Flush() { }
+		void Flush();
 
 		// Returns a 64-bit signed integer indicating the total size of the stream,
 		// in bytes. Any negative values returned indicate an error.
