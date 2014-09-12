@@ -78,10 +78,7 @@
   <ItemGroup>
     <ClCompile Include="FileStream.cpp" />
     <ClCompile Include="Source.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="FileStream.hpp" />
-    <ClInclude Include="Stream.hpp" />
+    <ClCompile Include="IndexedNumberStream.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
