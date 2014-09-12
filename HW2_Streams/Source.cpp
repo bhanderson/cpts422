@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Stream.hpp"
 #include "IndexedNumberStream.hpp"
+#include "FileStream.hpp"
 
 using namespace CS422;
 using namespace std;
