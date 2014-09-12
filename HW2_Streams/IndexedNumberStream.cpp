@@ -29,18 +29,23 @@ i64 IndexedNumberStream::GetPosition() const
 	return _position;
 }
 
+int IndexedNumberStream::ProceduralGenerate()
+{
+	return 66;
+}
+
 int IndexedNumberStream::Read(void* buf, int byteCount)
 {
+	unsigned char * shit = (unsigned char *)buf;
 	if (byteCount > (_size - _position))
 	{
 		return -1;
 	}
-	unsigned char* tempBuf = new unsigned char[byteCount];
 	for (int i = 0; i < byteCount; i++)
 	{
-		tempBuf[i] = '0';
+		shit[i] = ProceduralGenerate();
 	}
-	buf = tempBuf;
+	shit[byteCount] = 0;
 	SetPosition((_position + byteCount));
 	return byteCount;
 }
@@ -64,4 +69,5 @@ IndexedNumberStream::IndexedNumberStream(int byteSize)
 	_size = byteSize;
 	_canRead = true;
 	_canWrite = false;
+	_position = 0;
 }
