@@ -137,9 +137,15 @@ int main(int argc, const char* argv[])
 	// Create instances of such objects as needed here (make sure you are creating 
 	// each type of stream that you implemented).
 	// Write Stream unit testing functions and kick off the tests from here in main.
-	IndexedNumberStream fuckIt(10);
+	IndexedNumberStream fuckIt(512);
 	Stream* Hate = &fuckIt;
-	unsigned char temp[128];
+	unsigned char* temp = new unsigned char[512];
+	fuckIt.Read(temp, 512);
+	for (int i = 0; i < 512; i++)
+	{
+		printf("%d\n", temp[i]);
+	}
+	cout << temp << endl;
 	char resultValues[] = "BB";
 	char tests[3][3] = { "BB", "BB", "BB" };
 	char data[256] = "Hello my name is INSERT USER NAME HERE and I am feeling INSERT USER FEELING HERE, my favorite color is INSERT USER SELECTED COLOR HERE, and I leave on INSERT ADDRESS OF USER HERE, and most important I am 256 characters long with just a bit oh help I can m";
