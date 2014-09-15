@@ -62,7 +62,7 @@ public:
 	// Advances the position of the stream by the number of bytes written.
 	int Write(const void* buf, int byteCount);
 private:
-	int ProceduralGenerate();
+	unsigned int ProceduralGenerate();
 	bool _canRead;
 	bool _canSeek;
 	bool _canWrite;

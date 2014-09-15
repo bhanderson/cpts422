@@ -155,14 +155,6 @@ char* RandomRead(Stream* testStream, char values[][3], int bytes, int startPosit
 
 int main(int argc, const char* argv[])
 {
-	unsigned char temp[128];
-	char resultValues [] = "BB";
-	char tests[3][3] = { "BB", "BB", "BB" };
-	char data[256] = "Hello my name is INSERT USER NAME HERE and I am feeling INSERT USER FEELING HERE, my favorite color is INSERT USER SELECTED COLOR HERE, and I leave on INSERT ADDRESS OF USER HERE, and most important I am 256 characters long with just a bit oh help I can m";
-	char testValues[3][10] = { "My Name", "is what", "is who" };
-	int writevalues[3] = { 10, 10, 10 };
-
-
 	FileStream yolo("C:\\%username$\test.txt", ios::out | ios::in);
 	IndexedNumberStream fuckIt(10);
 	Stream *Hate = &fuckIt;
