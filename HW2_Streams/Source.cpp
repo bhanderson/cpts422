@@ -6,60 +6,60 @@
 #include "IndexedNumberStream.hpp"
 #include "FileStream.hpp"
 
+#define SUCCESS 0
+#define FAILURE -1
+
 using namespace CS422;
 using namespace std;
 
-int VerifyWrite(Stream *testStream, char *values, int bytes){
-	char *temp = (char *) malloc(bytes);
-
-	if (testStream->GetPosition() != bytes)
-		goto error;
-
-	testStream->SetPosition(0);
-	testStream->Read(temp, bytes);
-	if (strcmp(values, temp) == 0){
-		goto out;
-	}
-	goto error;
-out:
-	free(temp);
-	return 0;
-error:
-	free(temp);
-	return -1;
-}
-
-int WriteVerification(Stream* testStream, char* values, int bytes)
+int WriteVerification(Stream* testStream, u8* values, int bytes)
 {
-	if (!testStream->CanWrite())
-	{
-		return 0;
-	}
-	int written = testStream->Write(values, bytes);
-	if (written == bytes){
-		if (VerifyWrite(testStream, values, bytes) == 0){
-			return 0;
-		}
-	}
-	return -1;
+	// check the write succeeded
+	if (!testStream->CanRead())
+		return SUCCESS; // cant tell its wrong so its right
+	int position = testStream->GetPosition();
+	testStream->SetPosition(position - bytes);
+	char *read = new char[bytes];
+	testStream->Read(read, bytes);
+	if (memcmp(read, values, bytes) == 0)
+		return SUCCESS;
+	return FAILURE;
+
 }
-char* FixedSizeWrite(Stream* testStream, char data[][3], int bytes[])
+char* FixedSizeWriteCommon(Stream* testStream)
 {
-	int result;
-	for (int i = 0; i < 3; i++)
+	if (!testStream->CanWrite)
+		return "Test Passed";
+	u8 common[1024] = { 'a' };
+	for (int i = 0; i < 4; i++)
 	{
-		result = WriteVerification(testStream, data[i], bytes[i]);
-		if (result != 0)
-		{
-			return "Test Failed";
-		}
+		testStream->Write(common, 256);
 	}
+	int result = WriteVerification(testStream, common, 1024);
+	if (result != SUCCESS)
+		return "Test Failed";
 	return "Test Passed";
 }
-char* AllAtOnceWrite(Stream* testStream, char data[], int bytes)
+char *FixedSizeWriteUncommon(Stream* testStream){
+	if (!testStream->CanWrite)
+		return "Test Passed";
+	u8 uncommon[1801] = { 'b' };
+	for (int i = 0; i < 5; i++){
+		testStream->Write(uncommon, 360);
+	}
+	testStream->Write(uncommon, 1);
+	int result = WriteVerification(testStream, uncommon, 1801);
+	if (result != SUCCESS)
+		return "Test Failed";
+	return "Test Passed";
+
+}
+char* AllAtOnceWrite(Stream* testStream, u8 data[], int bytes)
 {
-	int result;
-	result = WriteVerification(testStream, data, bytes);
+	if (!testStream->CanWrite)
+		return "Test Passed";
+	testStream->Write(data, bytes);
+	int result = WriteVerification(testStream, data, bytes);
 	if (result != 0)
 	{
 		return "Test Failed";
