@@ -52,7 +52,7 @@ int IndexedNumberStream::Read(void* buf, int byteCount)
 
 i64 IndexedNumberStream::SetPosition(i64 position)
 {
-	if (position> 0 && position < _size)
+	if (position >= 0 && position < _size)
 	{
 		_position = position;
 	}
