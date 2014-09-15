@@ -74,6 +74,6 @@ namespace CS422
 		char* _buffer;
 		i64 _position;
 
-		void copy_buffer(const char* old_buf, i64 old_len, char* new_buf, i64 new_len);
+		void copy_buffer(const char* old_buf, char* new_buf, i64 len);
 	};
 }
