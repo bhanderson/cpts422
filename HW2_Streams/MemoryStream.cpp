@@ -4,6 +4,7 @@ namespace CS422
 {
 	MemoryStream::MemoryStream(i64 size) {
 		_buffer = new char[size];
+		_position = 0;
 		_length = 0;
 		_size = size;
 	}
@@ -30,11 +31,11 @@ namespace CS422
 		return true;
 	}
 
-	i64 MemoryStream::GetLength() const {
+	i64 MemoryStream::GetLength() {
 		return _length;
 	}
 	
-	i64 MemoryStream::GetPosition() const {
+	i64 MemoryStream::GetPosition() {
 		return _position;
 	}
 
@@ -45,10 +46,12 @@ namespace CS422
 
 		// copy into buf;
 		char* read_buf = (char*)buf;
-		for (int i = 0; i < byteCount; i++) {
+		int i;
+		for (i = 0; i < byteCount && i < _length; i++) {
 			read_buf[i] = _buffer[_position];
 			_position++;
 		}
+		return i;
 	}
 
 	i64 MemoryStream::SetPosition(i64 position) {
@@ -72,11 +75,13 @@ namespace CS422
 		
 		// Write data
 		char* write_buf = (char*)buf;
-		for (int i = 0; i < byteCount; i++) {
+		int i;
+		for (i = 0; i < byteCount; i++) {
 			_buffer[_position] = write_buf[i];
 			_position++;
 		}
 		_length = _position + 1;
+		return i + 1;
 	}
 
 	void MemoryStream::copy_buffer(const char* old_buf, char* new_buf, i64 len) {

@@ -8,6 +8,7 @@
 #include "Stream.hpp"
 #include "IndexedNumberStream.hpp"
 #include "FileStream.hpp"
+#include "MemoryStream.hpp"
 
 #define SUCCESS 0
 #define FAILURE -1
@@ -193,6 +194,26 @@ void testFileStream()
 	cout << FixedSizeWriteCommon(b) << endl;
 	cout << FixedSizeWriteUncommon(b) << endl;
 }
+
+void testMemoryStream()
+{
+	void *beef = "DEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEAD"
+		"BEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFD"
+		"EADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBE"
+		"EFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF";
+	
+	MemoryStream write(16);
+	Stream *a = &write;
+	cout << "Write Tests:\n----------------" << endl;
+	cout << AllAtOnceWrite(a, (u8 *)beef, 240) << endl;
+	cout << FixedSizeWriteCommon(a) << endl;
+	cout << FixedSizeWriteUncommon(a) << endl;
+	cout << "Read Tests:\n------------------" << endl;
+	cout << InOrderRead(a, (u8 *)beef, (u8 *)beef, (u8 *)beef, 80, 0) << endl;
+	cout << ReverseRead(a, (u8 *)beef, (u8 *)beef, (u8 *)beef, 80, 0) << endl;
+	cout << RandomRead(a, (u8 *)beef, (u8 *)beef, (u8 *)beef, 80, 0) << endl;
+}
+
 int main(int argc, const char* argv[])
 {
 	//FileStream yolo("C:\\Users\\Bryce\\test.txt", ios::out | ios::in);
@@ -205,6 +226,7 @@ int main(int argc, const char* argv[])
 	//Stream *Disdain = &yolo;
 	testIndexedStream();
 	testFileStream();
+	testMemoryStream();
 
 	//cout << WriteVerification(Disdain, data, 256);
 	//cout << InOrderRead(Hate, tests, 2, 0) << endl;
