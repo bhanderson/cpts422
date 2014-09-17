@@ -50,7 +50,7 @@ char *FixedSizeWriteUncommon(Stream* testStream){
 	if (!testStream->CanWrite())
 		return "FixedSizeWriteUncommon Passed";
 	u8 uncommon[1801] = { 'b' };
-	memset(uncommon, 'b', 1024);
+	memset(uncommon, 'b', 1801);
 	for (int i = 0; i < 5; i++){
 		testStream->Write(uncommon, 360);
 	}
