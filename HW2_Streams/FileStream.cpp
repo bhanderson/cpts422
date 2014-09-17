@@ -54,7 +54,7 @@ i64 CS422::FileStream::SetPosition(i64 position){
 int CS422::FileStream::Write(const void* buf, int byteCount){
 	if (CanWrite()) {
 		std::streampos current = GetPosition();
-		_buf.write((const char *)buf, byteCount);
+		_buf.write((const char *) buf, byteCount);
 		return _buf.tellg() - current;
 	}
 	return 0;
