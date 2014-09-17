@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <vector>
+#include <array>
 #include "Stream.hpp"
 #include "IndexedNumberStream.hpp"
 #include "FileStream.hpp"
@@ -36,6 +37,7 @@ char* FixedSizeWriteCommon(Stream* testStream)
 	if (!testStream->CanWrite())
 		return "FixedSizeWriteCommon Passed";
 	u8 common[1024] = { 'a' };
+	memset(common, 'a', 1024);
 	for (int i = 0; i < 4; i++)
 	{
 		testStream->Write(common, 256);
@@ -49,6 +51,7 @@ char *FixedSizeWriteUncommon(Stream* testStream){
 	if (!testStream->CanWrite())
 		return "FixedSizeWriteUncommon Passed";
 	u8 uncommon[1801] = { 'b' };
+	memset(uncommon, 'b', 1024);
 	for (int i = 0; i < 5; i++){
 		testStream->Write(uncommon, 360);
 	}
