@@ -19,6 +19,8 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MemoryStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="IndexedNumberStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -31,6 +33,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MemoryStream.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="IndexedNumberStream.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
