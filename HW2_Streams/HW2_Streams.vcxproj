@@ -76,11 +76,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MemoryStream.cpp" />
     <ClCompile Include="FileStream.cpp" />
     <ClCompile Include="IndexedNumberStream.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MemoryStream.hpp" />
     <ClInclude Include="FileStream.hpp" />
     <ClInclude Include="IndexedNumberStream.hpp" />
     <ClInclude Include="Stream.hpp" />
