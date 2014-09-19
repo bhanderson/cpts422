@@ -69,9 +69,8 @@ namespace CS422
 		// Advances the position of the stream by the number of bytes written.
 		int Write(const void* buf, int byteCount);
 	private:
-		i64 _length;
 		i64 _size;
-		char* _buffer;
+		u8* _buffer;
 		i64 _position;
 
 		void copy_buffer(const char* old_buf, char* new_buf, i64 len);

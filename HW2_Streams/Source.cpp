@@ -95,8 +95,8 @@ char* BackwardsWrite(Stream* testStream){
 	testStream->Write(b, 512);
 	testStream->SetPosition(1024);
 	unsigned char data[1024];
-	memset(data, 'a', 512);
-	memset(data + 512, 'b', 512);
+	memset(data + 512, 'a', 512);
+	memset(data, 'b', 512);
 	int result = WriteVerification(testStream, data, 1024);
 	if (result != SUCCESS)
 	{
@@ -351,13 +351,13 @@ void testFileStream()
 	os.open("read.txt");
 	os.write((char *)beef, 240);
 	os.close();
-	FileStream yolo("read.txt", ios::in);
+	FileStream yolo("read.txt", ios::in | ios::out);
 	Stream *a = &yolo;
 	cout << "Read Tests:\n------------------" << endl;
 	cout << InOrderRead(a, (u8 *)beef, (u8 *)beef, (u8 *)beef, 80, 0) << endl;
 	cout << ReverseRead(a, (u8 *)beef, (u8 *)beef, (u8 *)beef, 80, 0) << endl;
 	cout << RandomRead(a, (u8 *)beef, (u8 *)beef, (u8 *)beef, 80, 0) << endl;
-	FileStream write("write.txt", ios::out);
+	FileStream write("write.txt", ios::out | ios::in);
 	Stream *b = &write;
 	cout << "\nWrite Tests:\n----------------" << endl;
 	cout << AllAtOnceWrite(b, (u8 *)beef, 240) << endl;
@@ -396,6 +396,7 @@ void testMemoryStream()
 	cout << BackwardsReadbyBtye(a) << endl;
 	a = &read;
 	cout << "\nRead Tests:\n------------------" << endl;
+	a->Write(beef, 240);
 	cout << InOrderRead(a, (u8 *)beef, (u8 *)beef, (u8 *)beef, 80, 0) << endl;
 	cout << ReverseRead(a, (u8 *)beef, (u8 *)beef, (u8 *)beef, 80, 0) << endl;
 	cout << RandomRead(a, (u8 *)beef, (u8 *)beef, (u8 *)beef, 80, 0) << endl;

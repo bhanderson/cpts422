@@ -74,7 +74,7 @@ int CS422::FileStream::Read(void *buf, int byteCount){
 // set the position in the stream using seekg from fstream
 // if the position is larger then the length then return position
 i64 CS422::FileStream::SetPosition(i64 position){
-	if (_size - 1 < position)
+	if (_size - 1 < position || position < 0)
 		return _pos;
 	_pos = position;
 	return _pos;
@@ -88,8 +88,10 @@ int CS422::FileStream::Write(const void* buf, int byteCount){
 			return -1;
 		_buf = newbuf;
 		memcpy(_buf + _pos, buf, byteCount);
+
+		if ((_pos + byteCount) > _size)
+			_size = _pos + byteCount;
 		_pos += byteCount;
-		_size += byteCount;
 		return byteCount;
 	}
 	return 0;
