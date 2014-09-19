@@ -17,6 +17,7 @@
 using namespace CS422;
 using namespace std;
 
+// check the write succeeded by checking the bytes values in the stream 
 int WriteVerification(Stream* testStream, u8* values, int bytes)
 {
 	// check the write succeeded
@@ -32,6 +33,7 @@ int WriteVerification(Stream* testStream, u8* values, int bytes)
 	return FAILURE;
 
 }
+// write a fixed size of 256 4 times to = 1024
 char* FixedSizeWriteCommon(Stream* testStream)
 {
 	if (!testStream->CanWrite())
@@ -47,6 +49,7 @@ char* FixedSizeWriteCommon(Stream* testStream)
 		return "FixedSizeWriteCommon Failed";
 	return "FixedSizeWriteCommon Passed";
 }
+// write uncommon buffer sizes to test weird sizes
 char *FixedSizeWriteUncommon(Stream* testStream){
 	if (!testStream->CanWrite())
 		return "FixedSizeWriteUncommon Passed";
@@ -62,6 +65,7 @@ char *FixedSizeWriteUncommon(Stream* testStream){
 	return "FixedSizeWriteUncommon Passed";
 
 }
+// write a big chunk all at once
 char* AllAtOnceWrite(Stream* testStream, u8 data[], int bytes)
 {
 	if (!testStream->CanWrite())
@@ -175,22 +179,22 @@ void testIndexedStream()
 
 void testFileStream()
 {
-	ofstream os;// ("c:\\Users\\Bryce\\test.txt", ios::out | ios::in);
+	ofstream os;
 	void *beef = "DEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEAD"
 				 "BEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFD"
 				 "EADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBE"
 				 "EFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF";
 
-	os.open("c:\\Users\\Bryce\\read.txt");
+	os.open("read.txt");
 	os.write((char *)beef, 240);
 	os.close();
-	FileStream yolo("c:\\Users\\Bryce\\read.txt", ios::in);
+	FileStream yolo("read.txt", ios::in);
 	Stream *a = &yolo;
 	cout << "Read Tests:\n------------------" << endl;
 	cout << InOrderRead(a, (u8 *)beef, (u8 *)beef, (u8 *)beef, 80, 0) << endl;
 	cout << ReverseRead(a, (u8 *) beef, (u8 *) beef, (u8 *) beef, 80, 0) << endl;
 	cout << RandomRead(a, (u8 *) beef, (u8 *) beef, (u8 *) beef, 80, 0) << endl;
-	FileStream write("c:\\Users\\Bryce\\write.txt", ios::out);
+	FileStream write("write.txt", ios::out);
 	Stream *b = &write;
 	cout << "Write Tests:\n----------------" << endl;
 	cout << AllAtOnceWrite(b,(u8 *) beef,240) << endl;
@@ -219,25 +223,10 @@ void testMemoryStream()
 
 int main(int argc, const char* argv[])
 {
-	//FileStream yolo("C:\\Users\\Bryce\\test.txt", ios::out | ios::in);
-	//char c[8];
-	//yolo.Read(c, 8);
-	//fstream a("c:\\Users\\Bryce\\test.txt", ios::in);
-	//a.read(c, 8);
-	//printf("%s", c);
 
-	//Stream *Disdain = &yolo;
 	testIndexedStream();
 	testFileStream();
 	testMemoryStream();
-
-	//cout << WriteVerification(Disdain, data, 256);
-	//cout << InOrderRead(Hate, tests, 2, 0) << endl;
-	//cout << InOrderRead(Disdain, tests, 2, 0) << endl;
-	//cout << ReverseRead(Hate, tests, 2, 0) << endl;
-	//cout << RandomRead(Hate, tests, 2, 0) << endl;
-	//cout << AllAtOnceWrite(Hate, data, 256) << endl;
-	//cout << FixedSizeWrite(Hate, testValues, writevalues);
 	return 0;
 }
 
