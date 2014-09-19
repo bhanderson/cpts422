@@ -72,12 +72,39 @@ char* AllAtOnceWrite(Stream* testStream, u8 data[], int bytes)
 		return "AllAtOnceWrite Passed";
 	testStream->Write(data, bytes);
 	int result = WriteVerification(testStream, data, bytes);
-	if (result != 0)
+	if (result != SUCCESS)
 	{
 		return "AllAtOnceWrite Failed";
 	}
 	return "AllAtOnceWrite Passed";
 }
+//backwards write with random buffer size?
+char* BackwardsWrite(Stream* testStream){
+	if (!testStream->CanWrite())
+		return "BackwardsWrite Passed";
+	char pad[1024];
+	memset(pad, 0, 1024);
+	testStream->Write(pad, 1024);
+	testStream->SetPosition(512);
+	char a[512];
+	memset(a, 'a', 512);
+	testStream->Write(a, 512);
+	testStream->SetPosition(0);
+	char b[512];
+	memset(b, 'b', 512);
+	testStream->Write(b, 512);
+	testStream->SetPosition(1024);
+	unsigned char data[1024];
+	memset(data, 'a', 512);
+	memset(data + 512, 'b', 512);
+	int result = WriteVerification(testStream, data, 1024);
+	if (result != SUCCESS)
+	{
+		return "BackwardsWrite Failed";
+	}
+	return "BackwardsWrite Passed";
+}
+
 int ReadVerification(Stream* testStream, u8* values, int bytes)
 {
 	if (!testStream->CanRead())
@@ -175,6 +202,7 @@ void testIndexedStream()
 	cout << InOrderRead(Hate, temp1, temp2, temp3, 10, 0) << endl;
 	cout << ReverseRead(Hate, temp1, temp2, temp3, 10, 0) << endl;
 	cout << RandomRead(Hate, temp1, temp2, temp3, 10, 0) << endl;
+	cout << BackwardsWrite(Hate) << endl;
 }
 
 void testFileStream()
@@ -200,6 +228,7 @@ void testFileStream()
 	cout << AllAtOnceWrite(b,(u8 *) beef,240) << endl;
 	cout << FixedSizeWriteCommon(b) << endl;
 	cout << FixedSizeWriteUncommon(b) << endl;
+	cout << BackwardsWrite(b) << endl;
 }
 
 void testMemoryStream()
@@ -219,6 +248,7 @@ void testMemoryStream()
 	cout << InOrderRead(a, (u8 *)beef, (u8 *)beef, (u8 *)beef, 80, 0) << endl;
 	cout << ReverseRead(a, (u8 *)beef, (u8 *)beef, (u8 *)beef, 80, 0) << endl;
 	cout << RandomRead(a, (u8 *)beef, (u8 *)beef, (u8 *)beef, 80, 0) << endl;
+	cout << BackwardsWrite(a) << endl;
 }
 
 int main(int argc, const char* argv[])
