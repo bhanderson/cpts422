@@ -67,8 +67,11 @@ namespace CS422
 		// Advances the position of the stream by the number of bytes written.
 		int Write(const void* buf, int byteCount);
 	private:
-		std::fstream _buf;
-		std::ios_base::openmode _mode;
+		u8 * _buf;
+		i64 _pos;
+		i64 _size;
+		std::string _path;
+		std::ios::openmode _mode;
 	};
 }
 
