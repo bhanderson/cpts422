@@ -87,6 +87,9 @@
     <ClInclude Include="IndexedNumberStream.hpp" />
     <ClInclude Include="Stream.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="write.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

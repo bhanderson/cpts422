@@ -285,10 +285,10 @@ char* BackwardsReadbyBtye(Stream* testStream){
 	if (!testStream->CanWrite())
 		return "BackwardsReadByByte Passed";
 	int result;
-	testStream->SetPosition(1024);
+	testStream->SetPosition(1023);
 	char a[512];
 	memset(a, 'a', 512);
-	for (int i = 1024; i > 512; i--)
+	for (int i = 1024; i > 511; i--)
 	{
 		result = ReadVerification(testStream, (u8*)a, 1);
 		if (result != SUCCESS)
@@ -296,15 +296,16 @@ char* BackwardsReadbyBtye(Stream* testStream){
 			return "BackwardsReadByByte Failed";
 
 		}
-		testStream->SetPosition(i);
+		testStream->SetPosition(i-1);
 	}
 	char b[512];
 	memset(b, 'b', 512);
-	for (int i = 512; i > 0; i--)
+	for (int i = 511; i > 0; i--)
 	{
 		result = ReadVerification(testStream, (u8*)b, 1);
 		if (result != SUCCESS)
 		{
+			printf("%d", i);
 			return "BackwardsReadByByte Failed";
 
 		}
